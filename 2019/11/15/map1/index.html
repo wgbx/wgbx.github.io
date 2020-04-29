@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    基于地图的可视化模型方案（一）：加载地图 |
+    
+    微光北下</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+    <section class="outer">
+  <article id="post-map1" class="article article-type-post" itemscope
+         itemprop="blogPost" data-scroll-reveal>
+
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+  
+    <h1 class="article-title" itemprop="name">
+      基于地图的可视化模型方案（一）：加载地图
+    </h1>
+  
+
+
+            </header>
+        
+
+        
+            <div class="article-meta">
+                <a href="/2019/11/15/map1/" class="article-date">
+  <time datetime="2019-11-15T07:54:03.000Z" itemprop="datePublished">2019-11-15</time>
+</a>
+                
+            </div>
+        
+
+        
+            
+    <div class="tocbot"></div>
+
+
+        
+
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+                <p>基于地图的可视化模型方案，使用Mapbox在页面上加载地图</p>
+<a id="more"></a>
+<hr>
+
+<h2 id="vue-cli"><a href="#vue-cli" class="headerlink" title="vue-cli"></a>vue-cli</h2><p>在框架，模块化，越来越流行的时代，项目采用的是vue-cli脚手架，可在<a href="https://github.com/wgbx/vueTemplate" target="_blank" rel="noopener">vueCliTemplate</a>中clone后开发</p>
+<h2 id="地图"><a href="#地图" class="headerlink" title="地图"></a>地图</h2><p>目前市面上可选择的地图特别多：高德地图丶百度地图丶mapbox…<br>基于目前可视化框架的考虑，大多数都选择mapbox作为底图</p>
+<ol>
+<li>安装</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install mapbox --save</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>引用</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import mapboxgl from &apos;mapbox-gl/dist/mapbox-gl&apos;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>css</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#map &#123;</span><br><span class="line">    width: 100%;</span><br><span class="line">    height: 100%;</span><br><span class="line">    position: absolute;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>JavaScript</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mounted() &#123;</span><br><span class="line">  this.initMap();</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line">methods: &#123;</span><br><span class="line">    initMap() &#123;</span><br><span class="line">        mapboxgl.accessToken = &apos;Token&apos;;</span><br><span class="line">        this.map = new mapboxgl.Map(&#123;</span><br><span class="line">        container: &apos;map&apos;,</span><br><span class="line">        style: &apos;mapbox://styles/evollers/cjzhx2vaf35ix1cp9d7inydoc&apos;,</span><br><span class="line">        center: [116.585115, 40.07452], </span><br><span class="line">        zoom: 12.44, </span><br><span class="line">        pitch: 52.99, </span><br><span class="line">        bearing: -74.40,  </span><br><span class="line">        &#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p>词汇释义</p>
+<ul>
+<li><p>accessToken：在<a href="https://www.mapbox.com/" target="_blank" rel="noopener">mapbox</a>注册后悔生成一个密匙token，通过token使用地图服务</p>
+</li>
+<li><p>container：绑定dom的ID值</p>
+</li>
+<li><p>style：mapbox工作台自己创建的样式地图代码</p>
+</li>
+<li><p>center：中心点</p>
+</li>
+<li><p>zoom：层级</p>
+</li>
+<li><p>pitch：地图俯仰角度</p>
+</li>
+<li><p>bearing：角度</p>
+</li>
+</ul>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p><img src="https://gitee.com/wgbx/resources/raw/master/blog/map/0.png" alt="map"></p>
+</li>
+</ol>
+
+            
+        </div>
+                <footer class="article-footer">
+<!--                    <a data-url="https://wgbx.github.io/2019/11/15/map1/" data-id="ck9kqdpsv0000mkv1uap0xpcr"-->
+<!--                       class="article-share-link">分享</a>-->
+                    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mapbox/">Mapbox</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Webgl/">Webgl</a></li></ul>
+
+                </footer>
+
+    </div>
+
+    
+        
+  <nav class="article-nav">
+    
+    
+      <a href="/2019/08/12/gitNote/" class="article-nav-link">
+        <strong class="article-nav-caption">后一篇</strong>
+        <div class="article-nav-title">Git笔记</div>
+      </a>
+    
+  </nav>
+
+
+    
+
+    
+        
+    
+
+</article>
+
+
+
+</section>
+    <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2020 <a target="_blank" href="https://github.com/wgbx">微光北下</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+    
+        <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/logo.svg" alt="微光北下"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">主页</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">归档</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">相册</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">关于</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="搜索">
+        <i class="fe fe-search"></i>
+        搜索
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+    <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/snap.svg-min.js"></script>
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+
+  <script src="/js/tocbot.min.js"></script>
+  <script>
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+<script src="/js/ocean.js"></script>
+
+</aside>
+</body>
+</html>
