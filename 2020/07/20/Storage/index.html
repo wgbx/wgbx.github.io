@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    Storage封装 |
+    
+    微光北下</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+    <section class="outer">
+  <article id="post-Storage" class="article article-type-post" itemscope
+         itemprop="blogPost" data-scroll-reveal>
+
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+  
+    <h1 class="article-title" itemprop="name">
+      Storage封装
+    </h1>
+  
+
+
+            </header>
+        
+
+        
+            <div class="article-meta">
+                <a href="/2020/07/20/Storage/" class="article-date">
+  <time datetime="2020-07-20T07:54:03.000Z" itemprop="datePublished">2020-07-20</time>
+</a>
+                
+            </div>
+        
+
+        
+            
+    <div class="tocbot"></div>
+
+
+        
+
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+                <p>Storage 封装</p>
+<a id="more"></a>
+<hr>
+
+<h2 id="封装思路"><a href="#封装思路" class="headerlink" title="封装思路"></a>封装思路</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> STORAGE_KEY = <span class="string">"mall"</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Storage</span> </span>&#123;</span><br><span class="line">  setItem(key, valueJson, value) &#123;</span><br><span class="line">    <span class="keyword">if</span> (valueJson) &#123;</span><br><span class="line">      <span class="keyword">const</span> val = <span class="keyword">this</span>.getStorage(valueJson);</span><br><span class="line">      val[key] = value;</span><br><span class="line">      <span class="keyword">this</span>.setItem(valueJson, val);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> val = <span class="keyword">this</span>.getStorage();</span><br><span class="line">      val[key] = value;</span><br><span class="line">      <span class="built_in">window</span>.sessionStorage.setItem(STORAGE_KEY, <span class="built_in">JSON</span>.stringify(val));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  getItem(key, valueJson) &#123;</span><br><span class="line">    <span class="keyword">if</span> (valueJson) &#123;</span><br><span class="line">      <span class="keyword">const</span> val = <span class="keyword">this</span>.getItem(valueJson);</span><br><span class="line">      <span class="keyword">if</span> (val) <span class="keyword">return</span> val[key];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.getStorage()[key];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  getStorage() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(<span class="built_in">window</span>.sessionStorage.getItem(<span class="string">"STORAGE_KEY"</span>) || <span class="string">"&#123;&#125;"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  clear(key, valueJson) &#123;</span><br><span class="line">    <span class="keyword">const</span> val = <span class="keyword">this</span>.getStorage();</span><br><span class="line">    <span class="keyword">if</span> (valueJson) &#123;</span><br><span class="line">      <span class="keyword">delete</span> val[valueJson][key];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">delete</span> val[key];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">window</span>.sessionStorage.setItem(STORAGE_KEY, <span class="built_in">JSON</span>.stringify(val));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Storage;</span><br></pre></td></tr></table></figure>
+
+
+            
+        </div>
+                <footer class="article-footer">
+<!--                    <a data-url="https://wgbx.github.io/2020/07/20/Storage/" data-id="ckczscu6s0002eov11yp76vzk"-->
+<!--                       class="article-share-link">分享</a>-->
+                    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Storage/">Storage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li></ul>
+
+                </footer>
+
+    </div>
+
+    
+        
+  <nav class="article-nav">
+    
+      <a href="/2020/07/24/index/" class="article-nav-link">
+        <strong class="article-nav-caption">前一篇</strong>
+        <div class="article-nav-title">
+          
+            (no title)
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/11/15/map1/" class="article-nav-link">
+        <strong class="article-nav-caption">后一篇</strong>
+        <div class="article-nav-title">基于地图的可视化模型方案（一）：加载地图</div>
+      </a>
+    
+  </nav>
+
+
+    
+
+    
+        
+    
+
+</article>
+
+
+
+</section>
+    <footer class="footer">
+  <div class="outer">
+    <ul class="list-inline">
+      <li>&copy; 2020 <a target="_blank" href="https://github.com/wgbx">微光北下</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+
+<aside class="sidebar sidebar-specter">
+    
+        <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/logo.svg" alt="微光北下"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">主页</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">归档</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/gallery">相册</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">关于</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="搜索">
+        <i class="fe fe-search"></i>
+        搜索
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+    <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/snap.svg-min.js"></script>
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+  <script src="/js/search.js"></script>
+
+
+
+  <script src="/js/tocbot.min.js"></script>
+  <script>
+    tocbot.init({
+      tocSelector: '.tocbot',
+      contentSelector: '.article-entry',
+      headingSelector: 'h1, h2, h3, h4, h5, h6',
+      hasInnerContainers: true,
+      scrollSmooth: true,
+      positionFixedSelector: '.tocbot',
+      positionFixedClass: 'is-position-fixed',
+      fixedSidebarOffset: 'auto',
+    });
+  </script>
+
+
+<script src="/js/ocean.js"></script>
+
+</aside>
+</body>
+</html>

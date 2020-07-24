@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title></title>
+    <url>%2F2020%2F07%2F24%2Findex%2F</url>
+    <content type="text"><![CDATA[const STORAGE_KEY = "mall"; class Storage { setItem(key, valueJson, value) { if (valueJson) { const val = this.getStorage(valueJson); val[key] = value; this.setItem(valueJson, val); } else { const val = this.getStorage(); val[key] = value; window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(val)); } } getItem(key, valueJson) { if (valueJson) { const val = this.getItem(valueJson); if (val) return val[key]; } else { return this.getStorage()[key]; } } getStorage() { return JSON.parse(window.sessionStorage.getItem("STORAGE_KEY") || "{}"); } clear(key, valueJson) { const val = this.getStorage(); if (valueJson) { delete val[valueJson][key]; } else { delete val[key]; } window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(val)); } } export default Storage;]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Storage封装]]></title>
+    <url>%2F2020%2F07%2F20%2FStorage%2F</url>
+    <content type="text"><![CDATA[Storage 封装 封装思路const STORAGE_KEY = "mall";class Storage &#123; setItem(key, valueJson, value) &#123; if (valueJson) &#123; const val = this.getStorage(valueJson); val[key] = value; this.setItem(valueJson, val); &#125; else &#123; const val = this.getStorage(); val[key] = value; window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(val)); &#125; &#125; getItem(key, valueJson) &#123; if (valueJson) &#123; const val = this.getItem(valueJson); if (val) return val[key]; &#125; else &#123; return this.getStorage()[key]; &#125; &#125; getStorage() &#123; return JSON.parse(window.sessionStorage.getItem("STORAGE_KEY") || "&#123;&#125;"); &#125; clear(key, valueJson) &#123; const val = this.getStorage(); if (valueJson) &#123; delete val[valueJson][key]; &#125; else &#123; delete val[key]; &#125; window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(val)); &#125;&#125;export default Storage;]]></content>
+      <tags>
+        <tag>Storage</tag>
+        <tag>vue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[基于地图的可视化模型方案（一）：加载地图]]></title>
     <url>%2F2019%2F11%2F15%2Fmap1%2F</url>
     <content type="text"><![CDATA[基于地图的可视化模型方案，使用Mapbox在页面上加载地图 vue-cli在框架，模块化，越来越流行的时代，项目采用的是vue-cli脚手架，可在vueCliTemplate中clone后开发 地图目前市面上可选择的地图特别多：高德地图丶百度地图丶mapbox…基于目前可视化框架的考虑，大多数都选择mapbox作为底图 安装 npm install mapbox --save 引用 import mapboxgl from &apos;mapbox-gl/dist/mapbox-gl&apos; css #map &#123; width: 100%; height: 100%; position: absolute; &#125; JavaScript mounted() &#123; this.initMap();&#125;,methods: &#123; initMap() &#123; mapboxgl.accessToken = &apos;Token&apos;; this.map = new mapboxgl.Map(&#123; container: &apos;map&apos;, style: &apos;mapbox://styles/evollers/cjzhx2vaf35ix1cp9d7inydoc&apos;, center: [116.585115, 40.07452], zoom: 12.44, pitch: 52.99, bearing: -74.40, &#125;); &#125; &#125; 词汇释义 accessToken：在mapbox注册后悔生成一个密匙token，通过token使用地图服务 container：绑定dom的ID值 style：mapbox工作台自己创建的样式地图代码 center：中心点 zoom：层级 pitch：地图俯仰角度 bearing：角度 实现]]></content>

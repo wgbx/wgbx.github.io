@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wgbx.github.io/"/>
-  <updated>2020-04-29T02:24:51.032Z</updated>
+  <updated>2020-07-24T06:27:49.835Z</updated>
   <id>https://wgbx.github.io/</id>
   
   <author>
@@ -15,6 +15,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="https://wgbx.github.io/2020/07/24/index/"/>
+    <id>https://wgbx.github.io/2020/07/24/index/</id>
+    <published>2020-07-24T05:47:06.733Z</published>
+    <updated>2020-07-24T06:27:49.835Z</updated>
+    
+    <content type="html"><![CDATA[const STORAGE_KEY = "mall";class Storage {  setItem(key, valueJson, value) {    if (valueJson) {      const val = this.getStorage(valueJson);      val[key] = value;      this.setItem(valueJson, val);    } else {      const val = this.getStorage();      val[key] = value;      window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(val));    }  }  getItem(key, valueJson) {    if (valueJson) {      const val = this.getItem(valueJson);      if (val) return val[key];    } else {      return this.getStorage()[key];    }  }  getStorage() {    return JSON.parse(window.sessionStorage.getItem("STORAGE_KEY") || "{}");  }  clear(key, valueJson) {    const val = this.getStorage();    if (valueJson) {      delete val[valueJson][key];    } else {      delete val[key];    }    window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(val));  }}export default Storage;]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        const STORAGE_KEY = &quot;mall&quot;;
+
+class Storage {
+  setItem(key, valueJson, value) {
+    if (valueJson) {
+      const val = this.getStorage(value
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Storage封装</title>
+    <link href="https://wgbx.github.io/2020/07/20/Storage/"/>
+    <id>https://wgbx.github.io/2020/07/20/Storage/</id>
+    <published>2020-07-20T07:54:03.000Z</published>
+    <updated>2020-07-24T06:33:27.491Z</updated>
+    
+    <content type="html"><![CDATA[<p>Storage 封装</p><a id="more"></a><hr><h2 id="封装思路"><a href="#封装思路" class="headerlink" title="封装思路"></a>封装思路</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> STORAGE_KEY = <span class="string">"mall"</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Storage</span> </span>&#123;</span><br><span class="line">  setItem(key, valueJson, value) &#123;</span><br><span class="line">    <span class="keyword">if</span> (valueJson) &#123;</span><br><span class="line">      <span class="keyword">const</span> val = <span class="keyword">this</span>.getStorage(valueJson);</span><br><span class="line">      val[key] = value;</span><br><span class="line">      <span class="keyword">this</span>.setItem(valueJson, val);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> val = <span class="keyword">this</span>.getStorage();</span><br><span class="line">      val[key] = value;</span><br><span class="line">      <span class="built_in">window</span>.sessionStorage.setItem(STORAGE_KEY, <span class="built_in">JSON</span>.stringify(val));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  getItem(key, valueJson) &#123;</span><br><span class="line">    <span class="keyword">if</span> (valueJson) &#123;</span><br><span class="line">      <span class="keyword">const</span> val = <span class="keyword">this</span>.getItem(valueJson);</span><br><span class="line">      <span class="keyword">if</span> (val) <span class="keyword">return</span> val[key];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.getStorage()[key];</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  getStorage() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(<span class="built_in">window</span>.sessionStorage.getItem(<span class="string">"STORAGE_KEY"</span>) || <span class="string">"&#123;&#125;"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  clear(key, valueJson) &#123;</span><br><span class="line">    <span class="keyword">const</span> val = <span class="keyword">this</span>.getStorage();</span><br><span class="line">    <span class="keyword">if</span> (valueJson) &#123;</span><br><span class="line">      <span class="keyword">delete</span> val[valueJson][key];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">delete</span> val[key];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">window</span>.sessionStorage.setItem(STORAGE_KEY, <span class="built_in">JSON</span>.stringify(val));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Storage;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Storage 封装&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Storage" scheme="https://wgbx.github.io/tags/Storage/"/>
+    
+      <category term="vue" scheme="https://wgbx.github.io/tags/vue/"/>
+    
+  </entry>
   
   <entry>
     <title>基于地图的可视化模型方案（一）：加载地图</title>

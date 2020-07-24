@@ -50,6 +50,147 @@
 
     
       
+        <article id="post-index" class="article article-type-post" itemscope
+         itemprop="blogPost" data-scroll-reveal>
+
+    <div class="article-inner">
+        
+
+        
+            <div class="article-meta">
+                <a href="/2020/07/24/index/" class="article-date">
+  <time datetime="2020-07-24T05:47:06.733Z" itemprop="datePublished">2020-07-24</time>
+</a>
+                
+            </div>
+        
+
+        
+
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+                const STORAGE_KEY = "mall";
+
+class Storage {
+  setItem(key, valueJson, value) {
+    if (valueJson) {
+      const val = this.getStorage(valueJson);
+      val[key] = value;
+      this.setItem(valueJson, val);
+    } else {
+      const val = this.getStorage();
+      val[key] = value;
+      window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(val));
+    }
+  }
+  getItem(key, valueJson) {
+    if (valueJson) {
+      const val = this.getItem(valueJson);
+      if (val) return val[key];
+    } else {
+      return this.getStorage()[key];
+    }
+  }
+  getStorage() {
+    return JSON.parse(window.sessionStorage.getItem("STORAGE_KEY") || "{}");
+  }
+  clear(key, valueJson) {
+    const val = this.getStorage();
+    if (valueJson) {
+      delete val[valueJson][key];
+    } else {
+      delete val[key];
+    }
+    window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(val));
+  }
+}
+
+export default Storage;
+
+            
+        </div>
+                <footer class="article-footer">
+<!--                    <a data-url="https://wgbx.github.io/2020/07/24/index/" data-id="ckczsyjcm000aeov1fwstpy4e"-->
+<!--                       class="article-share-link">分享</a>-->
+                    
+                </footer>
+
+    </div>
+
+    
+
+    
+
+</article>
+
+
+
+      
+        <article id="post-Storage" class="article article-type-post" itemscope
+         itemprop="blogPost" data-scroll-reveal>
+
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+  
+    <h2 itemprop="name">
+      <a class="article-title" href="/2020/07/20/Storage/">Storage封装</a>
+    </h2>
+  
+
+
+            </header>
+        
+
+        
+            <div class="article-meta">
+                <a href="/2020/07/20/Storage/" class="article-date">
+  <time datetime="2020-07-20T07:54:03.000Z" itemprop="datePublished">2020-07-20</time>
+</a>
+                
+            </div>
+        
+
+        
+
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+                <p>Storage 封装</p>
+                
+                    <p>
+                        <a class="article-more-link" href="/2020/07/20/Storage/">阅读全文...</a>
+                    </p>
+                
+            
+        </div>
+                <footer class="article-footer">
+<!--                    <a data-url="https://wgbx.github.io/2020/07/20/Storage/" data-id="ckczscu6s0002eov11yp76vzk"-->
+<!--                       class="article-share-link">分享</a>-->
+                    
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Storage/">Storage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/">vue</a></li></ul>
+
+                </footer>
+
+    </div>
+
+    
+
+    
+
+</article>
+
+
+
+      
         <article id="post-map1" class="article article-type-post" itemscope
          itemprop="blogPost" data-scroll-reveal>
 
