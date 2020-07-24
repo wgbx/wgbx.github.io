@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://wgbx.github.io/"/>
-  <updated>2020-07-24T06:27:49.835Z</updated>
+  <updated>2020-07-24T06:33:27.491Z</updated>
   <id>https://wgbx.github.io/</id>
   
   <author>
@@ -15,32 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title></title>
-    <link href="https://wgbx.github.io/2020/07/24/index/"/>
-    <id>https://wgbx.github.io/2020/07/24/index/</id>
-    <published>2020-07-24T05:47:06.733Z</published>
-    <updated>2020-07-24T06:27:49.835Z</updated>
-    
-    <content type="html"><![CDATA[const STORAGE_KEY = "mall";class Storage {  setItem(key, valueJson, value) {    if (valueJson) {      const val = this.getStorage(valueJson);      val[key] = value;      this.setItem(valueJson, val);    } else {      const val = this.getStorage();      val[key] = value;      window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(val));    }  }  getItem(key, valueJson) {    if (valueJson) {      const val = this.getItem(valueJson);      if (val) return val[key];    } else {      return this.getStorage()[key];    }  }  getStorage() {    return JSON.parse(window.sessionStorage.getItem("STORAGE_KEY") || "{}");  }  clear(key, valueJson) {    const val = this.getStorage();    if (valueJson) {      delete val[valueJson][key];    } else {      delete val[key];    }    window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(val));  }}export default Storage;]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        const STORAGE_KEY = &quot;mall&quot;;
-
-class Storage {
-  setItem(key, valueJson, value) {
-    if (valueJson) {
-      const val = this.getStorage(value
-      
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>Storage封装</title>
