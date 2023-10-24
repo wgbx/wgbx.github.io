@@ -1,28 +1,22 @@
 import { defineConfig } from 'vitepress'
+import { getPosts, getPostLength } from './theme/serverUtils'
 
-// https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "My Awesome Project",
-  description: "A VitePress Site",
+  title: '微光北下',
+  description: 'Home of 微光北下',
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
+    logo: '/horse.svg',
+    posts: await getPosts(),
+    pageSize: 5,
+    postLength: await getPostLength(),
+    search: {
+      provider: 'local'
+    },
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: '🏡Blogs', link: '/' },
+      { text: '🔖Tags', link: '/tags' },
+      { text: '📃Archives', link: '/archives' }
     ],
-
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      }
-    ],
-
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ]
+    socialLinks: [{ icon: 'github', link: 'https://github.com/wgbx' }]
   }
 })
