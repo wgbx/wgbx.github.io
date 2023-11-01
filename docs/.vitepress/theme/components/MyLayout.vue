@@ -6,9 +6,9 @@
     </template>
     <template #doc-after>
       <div>
-        <button @click="back">cd ··</button>
+        <button @click="back">返回上一页</button>
       </div>
-      <Comments />
+      <!-- <Comments /> -->
     </template>
     <template #home-hero-before><HomeHero /> </template>
     <template #home-features-after> <Page /></template>

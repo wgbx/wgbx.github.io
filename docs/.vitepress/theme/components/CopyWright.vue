@@ -1,7 +1,7 @@
 <template>
   <footer>
     Powered by
-    <a href="https://github.com/clark-cui/" target="_blank" title="作者">clark-cui</a>
+    <a href="https://github.com/wgbx/" target="_blank" title="作者">wgbx</a>
     | Copyright © 2019-{{ date }} | MIT License
   </footer>
 </template>

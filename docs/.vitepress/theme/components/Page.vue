@@ -1,7 +1,7 @@
 <template>
   <FireWorksAnimation />
   <ShareCard />
-  <h1 class="blog-title">Blogs</h1>
+  <h1 class="blog-title">博客</h1>
   <div class="blogList">
     <a class="blog" v-for="item in posts" :href="withBase(item.regularPath)">
       <div class="title">{{ item.frontMatter.title }}</div>
@@ -9,9 +9,9 @@
     </a>
   </div>
   <div class="pagination">
-    <button class="left" v-if="pageCurrent > 1" @click="go(pageCurrent - 1)">Previous page</button>
+    <button class="left" v-if="pageCurrent > 1" @click="go(pageCurrent - 1)">上一页</button>
     <div v-if="pagesNum > 1">{{ `${pageCurrent}/${pagesNum}` }}</div>
-    <button class="right" v-if="pageCurrent < pagesNum" @click="go(pageCurrent + 1)">Next page</button>
+    <button class="right" v-if="pageCurrent < pagesNum" @click="go(pageCurrent + 1)">下一页</button>
   </div>
 </template>
 
@@ -20,6 +20,7 @@ import { ref } from 'vue'
 import ShareCard from './ShareCard.vue'
 import FireWorksAnimation from './FireWorksAnimation.vue'
 import { useData, withBase } from 'vitepress'
+
 interface post {
   regularPath: string
   frontMatter: object

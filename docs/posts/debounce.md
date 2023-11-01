@@ -1,0 +1,82 @@
+---
+title: 性能优化（一）：封装防抖函数
+date: 2021-03-29
+tags:
+  - 性能优化
+  - JavaScript
+---
+
+在前端开发过程中，我们经常会需要绑定一个持续触发的事件，比如输入框的内容监听，鼠标悬停等，那从性能的角度来说，持续触发一个事件当然是不可取的，这个时候我们就需要用到防抖函数
+
+<!--more-->
+<hr/>
+
+## 什么是防抖（debounce）？
+
+所谓防抖，就是指触发事件后在 N 秒内函数只能执行一次，如果在 N 秒内又触发事件，则会重新计算函数执行的时间
+
+## 手写一个防抖函数
+
+既然我们已经明确防抖的思想，那我们就依据思路，来手写一个防抖函数
+
+1. 进行 dom 的获取
+2. 对 dom 添加监听事件
+3. 在 keyup 事件初次触发时，timer 为 null，触发延迟函数，当持续触发 keyup 事件时，timer 还有未完成的延迟函数，会被清空，重新赋上新的延迟函数，在完成延迟函数时，清空 timer，然后重复上面的循环
+
+```js
+let text = document.getElementById('input')
+let timer = null
+text.addEventListener('keyup', function (e) {
+  if (timer) clearTimeout(timer)
+  timer = setTimeout(() => {
+    console.log(e.target.value)
+    timer = null
+  }, 1000)
+})
+```
+
+## 封装防抖函数
+
+然而在日常开发中，并不是写出来就可以，往往我们需要封装函数，我们需要梳理一下，封装函数可暴露的参数是什么？是函数和延迟时间
+
+ok，既然梳理清楚了，那我们就开始封装一个防抖函数吧~
+
+1. 暴露参数函数和延迟时间
+2. timer 在外层定义，形成闭包结构
+3. timer 为 null，触发延迟函数，当 fn 被持续触发时，timer 还有未完成的延迟函数，会被清空，重新赋上新的延迟函数，在完成延迟函数时，清空 timer，然后重复上面的循环
+4. 在 fn 上将 this 的指向改为传入的函数
+
+```js
+function debounce(fn, delay = 500) {
+  let timer = null
+  return function () {
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(() => {
+      fn.call(this, ...arguments)
+      timer = null
+    }, delay)
+  }
+}
+```
+
+Tips：
+
+1. 得益于 ES6 的拓展运算符，我们可以将 arguments 轻松的拓展出来，但我们仍然需要知道
+   - call 接收的参数：this，参数 1，参数 2
+   - apply 接收的参数：this，[参数 1，参数 2]
+2. 为什么我们需要更新 this 的指向？因为我们做的操作，有时需要得到参数的返回值，比如 mousemove 方法中，我们要获取鼠标的偏移量等数据，这时，this 的指向就显得格外重要
+
+## 调用函数
+
+在经历了封装函数后，调用函数就显得格外简单
+
+```js
+let text = document.getElementById('input')
+text.addEventListener(
+  'keyup',
+  debounce(function (e) {
+    console.log(e.target.value)
+  }),
+  1000
+)
+```

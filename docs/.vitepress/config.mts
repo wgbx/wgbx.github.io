@@ -7,6 +7,7 @@ export default defineConfig({
   themeConfig: {
     logo: '/horse.svg',
     posts: await getPosts(),
+    avator: '/avator.png',
     pageSize: 5,
     postLength: await getPostLength(),
     search: {

@@ -18,6 +18,7 @@ const { theme } = useData()
 }
 .avator {
   border-radius: 50%;
+  cursor: pointer;
   border: 5px solid var(--vp-avator-border);
 }
 
