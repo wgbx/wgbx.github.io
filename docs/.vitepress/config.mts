@@ -5,7 +5,7 @@ export default defineConfig({
   title: '微光北下',
   description: 'Home of 微光北下',
   themeConfig: {
-    logo: '/horse.svg',
+    // logo: '/horse.svg',
     posts: await getPosts(),
     avator: '/avator.png',
     pageSize: 5,

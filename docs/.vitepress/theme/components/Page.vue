@@ -140,6 +140,7 @@ const transDate = (date: string) => {
   box-shadow: 6px 6px var(--vp-c-brand);
   border: 4px solid #3f4e4f;
   cursor: pointer;
+  transition: 0.3s;
 }
 .blog:hover {
   text-decoration: none;
