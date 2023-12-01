@@ -2,7 +2,7 @@
 title: node截图方案：puppeteer
 date: 2022-3-7
 tags:
-  - Node
+  - node
   - puppeteer
 ---
 

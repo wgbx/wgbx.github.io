@@ -1,9 +1,8 @@
 ---
 title: 微信小程序：封装http请求(callback）
-date: 2018-06-12 15:54:03
+date: 2019-06-12 15:54:03
 tags:
   - 微信小程序
-  - http
 ---
 
 使用 callback思路封装小程序请求
