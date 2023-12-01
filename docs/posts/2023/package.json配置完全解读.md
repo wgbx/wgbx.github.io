@@ -42,7 +42,7 @@ package.json作为前端的大管家，到底有哪些配置和我们的日常�
 
 当克隆一个新的项目到本地时，需要执行npm install（yarn install）命令来安装项目所需的依赖文件。当执行该命令时，就会根据 package.json 文件中的配置信息来自动下载所需的模块，也就是配置项目所需的运行和开发环境。
 package.json 常见配置项如下：
-![01ecd78f99db6c6c71e1ec22d06545c9.png](../public/01ecd78f99db6c6c71e1ec22d06545c9.png)
+![01ecd78f99db6c6c71e1ec22d06545c9.png](./images/01ecd78f99db6c6c71e1ec22d06545c9.png)
 
 ## 一、必须属性
 
@@ -56,9 +56,9 @@ name很容易理解，就是项目的名称，它是一个字符串。在给name
 - 名称可以作为参数被传入require("")，用来导入模块，所以应当尽可能的简短、语义化；
 - 名称不能和其他模块的名称重复，可以使用npm view命令查询模块明是否重复，如果不重复就会提示404：
 
-![1997e8b80000540486d1f5d60a4fc3e6.png](../public/1997e8b80000540486d1f5d60a4fc3e6.png)
+![1997e8b80000540486d1f5d60a4fc3e6.png](./images/1997e8b80000540486d1f5d60a4fc3e6.png)
 如果npm包上有对应的包，则会显示包的详细信息：
-![2188742ff7e107383e9983e79391b7cb.png](../public/2188742ff7e107383e9983e79391b7cb.png)
+![2188742ff7e107383e9983e79391b7cb.png](./images/2188742ff7e107383e9983e79391b7cb.png)
 实际上，我们平时开发的很多项目并不会发布在npm上，所以这个名称是否标准可能就不是那么重要，它不会影响项目的正常运行。如果需要发布在npm上，name字段一定要符合要求。
 
 ### 2. version
@@ -78,7 +78,7 @@ npm view react versions
 ```
 
 当执行第二条命令时，结果如下：
-![5acb1c4ec79bd000a04a1b32dce718e7.png](../public/5acb1c4ec79bd000a04a1b32dce718e7.png)
+![5acb1c4ec79bd000a04a1b32dce718e7.png](./images/5acb1c4ec79bd000a04a1b32dce718e7.png)
 
 ## 二、描述信息
 
@@ -91,7 +91,7 @@ description字段用来描述这个项目包，它是一个字符串，可以让
 ### 2. keywords
 
 keywords字段是一个字符串数组，表示这个项目包的关键词。和description一样，都是用来增加项目包的曝光率的。下面是eslint包的描述和关键词：
-![d48627f6ff6f11e6d3e32e43d06318ad.png](../public/d48627f6ff6f11e6d3e32e43d06318ad.png)
+![d48627f6ff6f11e6d3e32e43d06318ad.png](./images/d48627f6ff6f11e6d3e32e43d06318ad.png)
 
 ### 3. author
 
