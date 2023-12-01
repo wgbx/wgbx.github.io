@@ -9,7 +9,7 @@ tags:
 
 VS Code 是前端开发者最佳的开发工具，你在开发中是否疲倦了从一个文件拷贝来新建一个文件呢？或者在你的团队内部是否有一些内部组件库，比如 Ant Design、 React hooks 等组件库，团队内部伴随开发的也一直打开组件相关文档？
 其实我们可以开发一些常用的代码片段（Snippets）供团队内部使用。当输入前缀的时候就会触发智能提示。
-![](./images/53d38179ba45463892c9ae32bf80c8ae~tplv-k3u1fbpfcp-zoom-in-crop-mark_4536_0_0_0.awebp)
+![](./images/53d38179ba45463892c9ae32bf80c8ae.awebp)
 
 ## Snippets 插件库
 
