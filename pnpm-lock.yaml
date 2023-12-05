@@ -2030,8 +2030,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /vite@4.5.0(@types/node@20.8.8):
-    resolution: {integrity: sha512-ulr8rNLA6rkyFAlVWw2q5YJ91v098AFQ2R0PRFwPzREXOUJQPtFUG0t+/ZikhaOCDqFoDhN6/v8Sq0o4araFAw==}
+  /vite@4.5.1(@types/node@20.8.8):
+    resolution: {integrity: sha512-AXXFaAJ8yebyqzoNB9fu2pHoo/nWX+xZlaRwoeYUxEqBO+Zj4msE5G+BhGBll9lYEKv9Hfks52PAF2X7qDYXQA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -2089,7 +2089,7 @@ packages:
       markdown-it-mathjax3: 4.3.2
       minisearch: 6.1.0
       shiki: 0.14.5
-      vite: 4.5.0(@types/node@20.8.8)
+      vite: 4.5.1(@types/node@20.8.8)
       vue: 3.3.6
     transitivePeerDependencies:
       - '@algolia/client-search'
