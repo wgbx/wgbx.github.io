@@ -1,6 +1,6 @@
 ---
 title: vue3配置 .eslintrc.js规则
-date: 2023-05-15
+date: 2022-05-16
 tags:
   - eslint
   - vue
