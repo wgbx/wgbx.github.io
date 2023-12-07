@@ -2,8 +2,7 @@
 title: Husky +Prettier + Commitlint+ Lint-staged 规范前端工程代码规范
 date: 2022-12-10
 tags:
-  - Prettier
-  - Lint-staged
+  - eslint
 ---
 
 ### 前言
