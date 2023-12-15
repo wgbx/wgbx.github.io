@@ -1,6 +1,6 @@
 ---
-title: 从 0 构建 webpack 插件 - 查找项目中是否存在未使用的资源
-date: 2023-12-15
+title: 从 0 构建 webpack 插件 - 查找项目中是否有重复图片
+date: 2023-12-16
 tags:
   - webpack
   - node
@@ -278,11 +278,10 @@ module.exports = UnusedFilesWebpackPlugin;
 基于我们要分析项目中未使用的资源，我们代码的思路需要实现以下几点
 
 1. 设计插件需要的传参
-2. 查找项目中全部使用的资源路径
-3. 查找项目已使用的资源路径
-4. 从全部依赖中过滤出未使用资源路径
-5. 对未使用的资源进行类别分类
-6. 输出未使用文件 json
+2. 查找项目中所有图片资源
+3. 获取图片资源的 md5 进行比对，比对相同的即是同一张图片，进行输出
+4. 对相同图片的资源进行类别分类
+5. 输出未使用文件 json
 
 ## 创建项目
 
@@ -329,26 +328,27 @@ pnpm add @rollup/plugin-babel @rollup/plugin-commonjs @rollup/plugin-node-resolv
 
 ```json
 {
-  "name": "unused-assets-webpack-plugin",
-  "version": "0.0.1",
-  "description": "查找项目中是否存在是否未使用的资源",
+  "name": "image-duplicates-webpack-plugin",
+  "version": "0.0.8",
+  "description": "查找项目中是否有重复图片",
   "keywords": [
     "webpack-plugin",
-    "unused-assets"
+    "image",
+    "duplicates"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/wgbx/unused-assets-webpack-plugin.git"
+    "url": "https://github.com/wgbx/image-duplicates-webpack-plugin.git"
   },
-  "homepage": "https://github.com/wgbx/unused-assets-webpack-plugin",
+  "homepage": "https://github.com/wgbx/image-duplicates-webpack-plugin",
   "exports": {
     ".": {
-      "require": "./dist/unused-assets-webpack-plugin.cjs",
-      "import": "./dist/unused-assets-webpack-plugin.mjs"
+      "require": "./dist/image-duplicates-webpack-plugin.cjs",
+      "import": "./dist/image-duplicates-webpack-plugin.mjs"
     }
   },
-  "main": "dist/unused-assets-webpack-plugin.cjs",
-  "module": "dist/unused-assets-webpack-plugin.mjs",
+  "main": "dist/image-duplicates-webpack-plugin.cjs",
+  "module": "dist/image-duplicates-webpack-plugin.mjs",
   "scripts": {
     "build": "rollup --config ./rollup.config.mjs"
   },
@@ -364,7 +364,6 @@ pnpm add @rollup/plugin-babel @rollup/plugin-commonjs @rollup/plugin-node-resolv
     "@rollup/plugin-terser": "^0.4.1",
     "@rollup/plugin-typescript": "^11.1.2",
     "@types/node": "^20.3.3",
-    "glob": "^7.1.7",
     "rollup": "^3.21.5",
     "tslib": "^2.6.0"
   }
@@ -378,22 +377,21 @@ import NodeResolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
 import terser from '@rollup/plugin-terser'
-import typescript from '@rollup/plugin-typescript'
 
-const name = 'unused-assets-webpack-plugin'
+const name = 'image-duplicates-webpack-plugin'
 
 export default {
   input: './packages/index',
   output: [
     {
       name,
-      file: 'dist/unused-assets-webpack-plugin.cjs',
+      file: 'dist/image-duplicates-webpack-plugin.cjs',
       format: 'cjs',
       plugins: [terser()]
     },
     {
       name,
-      file: 'dist/unused-assets-webpack-plugin.mjs',
+      file: 'dist/image-duplicates-webpack-plugin.mjs',
       format: 'es',
       plugins: [terser()]
     }
@@ -404,188 +402,97 @@ export default {
     babel({
       babelHelpers: 'bundled',
       exclude: 'node_modules/**'
-    }),
-    typescript({ outDir: 'dist/' })
+    })
   ],
 }
-
 ```
 
 ### 构建代码
 
-```javascript
-const util = require('util');
-const glob = util.promisify(require('glob'));
-const path = require('path');
-const log = require('picocolors')
-const { writeFileSync } = require('node:fs')
-
-class UnusedFilesWebpackPlugin {
-  constructor(options) {
-    this.options = options;
-  }
-  apply(compiler) {
-    compiler.hooks.afterEmit.tap('UnusedFilesWebpackPlugin', async (compilation) => {
-      const userOptions = { ...defaultOptions, ...this.options }
-      const { output } = userOptions
-      const unusedAssets = await findUnusedAssets(compilation, userOptions)
-      const classificationFiles = classificationFile(unusedAssets, userOptions)
-      setFile(classificationFiles, output)
-    });
-  }
-}
-
-const defaultOptions = {
-  path: './src',
-  output: './unused-files.json',
-  exclude: []
-}
-
-async function findUnusedAssets(compilation, options) {
-  const { path } = options
-  const pattern = `${path}/**/*`
-  const allFiles = await getAllFiles(pattern)
-  const dependFiles = getDependFiles(compilation)
-  return allFiles.filter(item => !dependFiles.includes(item));
-}
-
-
-async function getAllFiles(pattern) {
-  try {
-    const patternFiles = await glob(pattern, { nodir: true });
-    return patternFiles.map(item => path.resolve(item))
-  } catch (error) {
-    console.log('getAllFiles Error:', error);
-  }
-}
-
-function getDependFiles(compilation) {
-  const { fileDependencies } = compilation
-  const dependFiles = []
-  fileDependencies.forEach(item => {
-    if (!item.includes('node_modules')) {
-      dependFiles.push(item)
-    }
-  })
-  return dependFiles
-}
-
-
-function setFile(data, name = './unused-files.json') {
-  writeFileSync(name, JSON.stringify(data, null, 2), (err) => {
-    if (err) {
-      log.red(`${name} 文件写入失败`)
-    }
-  })
-}
-
-function classificationFile(files, options) {
-  const { exclude } = options
-  const classifiedFiles = {};
-  files.forEach((file) => {
-    const extname = path.extname(file)
-    if (!exclude.includes(extname)) {
-      if (classifiedFiles[extname]) {
-        classifiedFiles[extname].push(file);
-      } else {
-        classifiedFiles[extname] = [file];
-      }
-    }
-  });
-  return classifiedFiles
-}
-
-module.exports = UnusedFilesWebpackPlugin;
-```
-
 在 packages 下创建 index.js
 
 ```javascript
-const util = require('util');
-const glob = util.promisify(require('glob'));
-const path = require('path');
+const { writeFileSync, readdirSync, existsSync, statSync, readFileSync } = require('node:fs')
+const { resolve, join, extname } = require('node:path')
 const log = require('picocolors')
-const { writeFileSync } = require('node:fs')
-
-class UnusedFilesWebpackPlugin {
-  constructor(options) {
-    this.options = options;
-  }
-  apply(compiler) {
-    compiler.hooks.afterEmit.tap('UnusedFilesWebpackPlugin', async (compilation) => {
-      const userOptions = { ...defaultOptions, ...this.options }
-      const { output } = userOptions
-      const unusedAssets = await findUnusedAssets(compilation, userOptions)
-      const classificationFiles = classificationFile(unusedAssets, userOptions)
-      setFile(classificationFiles, output)
-    });
-  }
-}
+const { createHash } = require('crypto');
 
 const defaultOptions = {
-  path: './src',
-  output: './unused-files.json',
-  exclude: []
+  imagePath: 'src',
+  imageType: ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.svg', '.webp'],
+  isAbsolutePath: false
 }
 
-async function findUnusedAssets(compilation, options) {
-  const { path } = options
-  const pattern = `${path}/**/*`
-  const allFiles = await getAllFiles(pattern)
-  const dependFiles = getDependFiles(compilation)
-  return allFiles.filter(item => !dependFiles.includes(item));
+const errorTip = (title, text) => {
+  console.log(`${log.bold(log.red(title))} ${text}`)
 }
 
+const getFileMap = (userOptions) => {
+  const { imagePath, imageType, isAbsolutePath } = userOptions
+  const assetPath = resolve(process.cwd())
+  const absolutePath = resolve(process.cwd(), imagePath)
+  const hashTable = new Map()
 
-async function getAllFiles(pattern) {
-  try {
-    const patternFiles = await glob(pattern, { nodir: true });
-    return patternFiles.map(item => path.resolve(item))
-  } catch (error) {
-    console.log('getAllFiles Error:', error);
-  }
-}
-
-function getDependFiles(compilation) {
-  const { fileDependencies } = compilation
-  const dependFiles = []
-  fileDependencies.forEach(item => {
-    if (!item.includes('node_modules')) {
-      dependFiles.push(item)
+  const processFile = (filePath) => {
+    if (statSync(filePath).isDirectory()) {
+      readdirSync(filePath).forEach(filename => {
+        processFile(join(filePath, filename))
+      })
+    } else if (imageType.includes(extname(filePath).toLowerCase())) {
+      const fileData = readFileSync(filePath)
+      const hash = createHash('md5').update(fileData).digest('hex')
+      let fileRelativePath = filePath.replaceAll('\\', '/')
+      if (!isAbsolutePath) {
+        fileRelativePath = filePath.replace(assetPath, '').replaceAll('\\', '/')
+      }
+      if (hashTable.has(hash)) {
+        hashTable.set(hash, [...hashTable.get(hash), fileRelativePath])
+      } else {
+        hashTable.set(hash, [fileRelativePath])
+      }
     }
+  }
+
+  if (!existsSync(absolutePath)) {
+    errorTip('文件夹不存在:', absolutePath)
+    process.exit(0)
+  }
+  readdirSync(absolutePath).forEach(filename => {
+    const filePath = join(absolutePath, filename)
+    processFile(filePath)
   })
-  return dependFiles
+  return hashTable
 }
 
-
-function setFile(data, name = './unused-files.json') {
-  writeFileSync(name, JSON.stringify(data, null, 2), (err) => {
+const setFile = (data, name = 'image-duplicates.json') => {
+  writeFileSync(`./${name}`, JSON.stringify(data, null, 2), (err) => {
     if (err) {
       log.red(`${name} 文件写入失败`)
     }
   })
 }
 
-function classificationFile(files, options) {
-  const { exclude } = options
-  const classifiedFiles = {};
-  files.forEach((file) => {
-    const extname = path.extname(file)
-    if (!exclude.includes(extname)) {
-      if (classifiedFiles[extname]) {
-        classifiedFiles[extname].push(file);
-      } else {
-        classifiedFiles[extname] = [file];
+class ImageDuplicatesWebpackPlugin {
+  options;
+  constructor(options) {
+    this.options = options;
+  }
+  apply() {
+    const userOptions = { ...defaultOptions, ...this.options }
+    const dataMap = getFileMap(userOptions)
+    const sameFile = []
+    dataMap.forEach((item) => {
+      if (item.length > 1) {
+        sameFile.push({ '相同图片': item })
       }
-    }
-  });
-  return classifiedFiles
+    })
+    setFile(sameFile)
+  }
 }
 
-module.exports = UnusedFilesWebpackPlugin;
+module.exports = ImageDuplicatesWebpackPlugin;
 ```
 
-1. 利用 afterEmit 钩子使用 glob 获取在参数文件夹下所有使用的文件
-2. webpack 的 compilation 的 fileDependencies 会暴露出运行阶段所依赖的函数，过滤出不含 node_modules 的文件路径
-3. 通过过滤筛选出未使用的文件路径
-4. 基于筛选出的未使用文件，基于文件后缀进行数据分类，使用 node fs 进行文本输出
+1. 使用 node 查询项目中所有的图片，遇到文件夹则进行递归操作
+2. 通过过滤筛选出相同的 md5 图片值
+3. 基于筛选出的未使用文件，基于文件后缀进行数据分类，使用 node fs 进行文本输出
