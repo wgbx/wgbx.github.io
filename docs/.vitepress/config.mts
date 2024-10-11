@@ -14,9 +14,9 @@ export default defineConfig({
       provider: 'local'
     },
     nav: [
-      { text: '🏡Blogs', link: '/' },
-      { text: '🔖Tags', link: '/tags' },
-      { text: '📃Archives', link: '/archives' }
+      { text: '🏡博客', link: '/' },
+      { text: '🔖标签', link: '/tags' },
+      { text: '📃文章', link: '/archives' }
     ],
     socialLinks: [{ icon: 'github', link: 'https://github.com/wgbx' }]
   }
