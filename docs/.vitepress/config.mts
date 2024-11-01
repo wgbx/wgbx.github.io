@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 import { getPosts, getPostLength } from './theme/serverUtils'
 
 export default defineConfig({
+  base: '/blog/',
   title: '微光北下',
   description: 'Home of 微光北下',
   themeConfig: {
